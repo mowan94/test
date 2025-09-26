@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<!-- saved from url=(0083)file:///Users/mowan/Downloads/Telegram%20Desktop/deepseek_html_20250926_90e260.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>动物保护色模拟实验 - iPad兼容版</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f0f7ff;
+            padding: 20px;
+            touch-action: manipulation;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+        }
+        .description {
+            background-color: #e8f4f8;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-left: 5px solid #3498db;
+            font-size: clamp(14px, 3vw, 16px);
+        }
+        .environment {
+            position: relative;
+            width: 100%;
+            height: 60vh;
+            min-height: 400px;
+            max-height: 600px;
+            border: 3px solid #95a5a6;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            transition: background-color 0.5s ease;
+            background-size: cover;
+            background-position: center;
+            touch-action: none;
+        }
+        .light-bg {
+            background-color: #d3d3d3;
+        }
+        .dark-bg {
+            background-color: #8B4513;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .bg-controls, .simulation-controls {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        button {
+            padding: 14px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: clamp(14px, 3vw, 16px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            min-height: 50px;
+            min-width: 120px;
+        }
+        button:active {
+            transform: scale(0.95);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .bg-btn {
+            background-color: #3498db;
+            color: white;
+        }
+        .start-btn {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .stop-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .breed-btn {
+            background-color: #9b59b6;
+            color: white;
+        }
+        .reset-btn {
+            background-color: #f39c12;
+            color: white;
+        }
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: clamp(14px, 3vw, 16px);
+        }
+        .dot {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.3s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            touch-action: none;
+        }
+        .dot:active {
+            transform: scale(1.3);
+        }
+        .stats-container {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .stats-panel {
+            flex: 1;
+            min-width: 300px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .stats-panel h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+            font-size: clamp(16px, 3vw, 18px);
+        }
+        .stats {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: clamp(12px, 2.5vw, 14px);
+        }
+        .stats th, .stats td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        .stats th {
+            background-color: #2c3e50;
+            color: white;
+            font-weight: bold;
+        }
+        .stats tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .stats tr:hover {
+            background-color: #e9f7fe;
+        }
+        .color-sample {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .instructions {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #fff8dc;
+            border-radius: 10px;
+            border-left: 5px solid #ffd700;
+        }
+        .instructions h3 {
+            margin-bottom: 15px;
+            color: #d35400;
+            font-size: clamp(16px, 3vw, 18px);
+        }
+        .instructions ol {
+            margin-left: 20px;
+        }
+        .instructions li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+            font-size: clamp(14px, 2.5vw, 16px);
+        }
+        .counter {
+            font-size: clamp(16px, 3vw, 18px);
+            font-weight: bold;
+            color: #e74c3c;
+            text-align: center;
+            margin: 10px 0;
+        }
+        .custom-bg-control {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px dashed #95a5a6;
+        }
+        .custom-bg-control h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+            font-size: clamp(14px, 3vw, 16px);
+        }
+        .url-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .url-input input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: clamp(14px, 3vw, 16px);
+            min-width: 200px;
+        }
+        .url-input button {
+            padding: 12px 18px;
+            min-width: 120px;
+        }
+        .preview {
+            margin-top: 15px;
+            text-align: center;
+        }
+        .preview img {
+            max-width: 100%;
+            max-height: 150px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+        .zoom-notice {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #ffeaa7;
+            border-radius: 6px;
+            text-align: center;
+            font-size: clamp(14px, 2.5vw, 16px);
+        }
+        .count-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            align-items: center;
+        }
+        .count-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .count-control label {
+            font-weight: bold;
+            min-width: 70px;
+            font-size: clamp(14px, 2.5vw, 16px);
+        }
+        .count-control input {
+            width: 70px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            text-align: center;
+            font-size: clamp(14px, 2.5vw, 16px);
+        }
+        .apply-count-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 18px;
+            min-width: 120px;
+        }
+        .ipad-tips {
+            background-color: #e8f6f3;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #1abc9c;
+            font-size: clamp(14px, 2.5vw, 16px);
+        }
+        @media (max-width: 1024px) {
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            .bg-controls, .simulation-controls {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+            .url-input {
+                flex-direction: column;
+            }
+            .count-controls {
+                justify-content: center;
+            }
+            .stats-container {
+                flex-direction: column;
+            }
+            .stats-panel {
+                min-width: 100%;
+            }
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            .environment {
+                height: 50vh;
+                min-height: 350px;
+            }
+            button {
+                padding: 12px 16px;
+                min-width: 100px;
+                min-height: 44px;
+            }
+            .count-control {
+                flex: 1;
+                min-width: 45%;
+            }
+        }
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 10px;
+            }
+            .count-control {
+                min-width: 100%;
+            }
+            .dot {
+                width: 16px;
+                height: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>动物保护色模拟实验 - iPad兼容版</h1>
+        
+        <div class="description">
+            <p>本模拟演示了动物保护色在自然选择中的形成过程。不同颜色的圆点在不同背景下具有不同的被捕食风险，幸存者将遗传其颜色特征。</p>
+            <div class="zoom-notice">
+                提示：圆点已针对触摸屏优化，运动速度已提升至1.5倍
+            </div>
+            <div class="ipad-tips">
+                <strong>iPad使用提示：</strong> 直接点击圆点进行"捕食"，双指缩放可调整视图大小。
+            </div>
+        </div>
+        
+        <div class="count-controls">
+            <div class="count-control">
+                <label for="whiteCount">白色:</label>
+                <input type="number" id="whiteCount" min="0" max="100" value="5">
+            </div>
+            <div class="count-control">
+                <label for="lightgrayCount">浅灰色:</label>
+                <input type="number" id="lightgrayCount" min="0" max="100" value="5">
+            </div>
+            <div class="count-control">
+                <label for="grayCount">灰色:</label>
+                <input type="number" id="grayCount" min="0" max="100" value="5">
+            </div>
+            <div class="count-control">
+                <label for="darkbrownCount">深褐色:</label>
+                <input type="number" id="darkbrownCount" min="0" max="100" value="5">
+            </div>
+            <div class="count-control">
+                <label for="brownCount">褐色:</label>
+                <input type="number" id="brownCount" min="0" max="100" value="5">
+            </div>
+            <div class="count-control">
+                <label for="blackCount">黑色:</label>
+                <input type="number" id="blackCount" min="0" max="100" value="5">
+            </div>
+            <button class="apply-count-btn" id="applyCountBtn">应用数量</button>
+        </div>
+        
+        <div class="controls">
+            <div class="bg-controls">
+                <button class="bg-btn" id="lightBgBtn">浅灰色背景</button>
+                <button class="bg-btn" id="darkBgBtn">深褐色背景</button>
+            </div>
+            <div class="simulation-controls">
+                <button class="start-btn" id="startBtn" disabled="">开始模拟</button>
+                <button class="stop-btn" id="stopBtn">停止模拟</button>
+                <button class="breed-btn" id="breedBtn" disabled="">繁殖</button>
+                <button class="reset-btn" id="resetBtn">重置</button>
+                <div class="speed-control">
+                    <span>速度: 1.5x</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="environment light-bg" id="environment"><div class="dot" data-color="white" style="background-color: rgb(255, 255, 255); left: 622.028px; top: 451.606px;"></div><div class="dot" data-color="white" style="background-color: rgb(255, 255, 255); left: 1009.68px; top: 278.749px;"></div><div class="dot" data-color="white" style="background-color: rgb(255, 255, 255); left: 733.873px; top: 62.9013px;"></div><div class="dot" data-color="white" style="background-color: rgb(255, 255, 255); left: 357.391px; top: 474.412px;"></div><div class="dot" data-color="white" style="background-color: rgb(255, 255, 255); left: 307.473px; top: 192.938px;"></div><div class="dot" data-color="lightgray" style="background-color: rgb(211, 211, 211); left: 777.317px; top: 122.998px;"></div><div class="dot" data-color="lightgray" style="background-color: rgb(211, 211, 211); left: 820.455px; top: 101.089px;"></div><div class="dot" data-color="lightgray" style="background-color: rgb(211, 211, 211); left: 914.106px; top: 396.739px;"></div><div class="dot" data-color="lightgray" style="background-color: rgb(211, 211, 211); left: 452.55px; top: 470.704px;"></div><div class="dot" data-color="lightgray" style="background-color: rgb(211, 211, 211); left: 560.582px; top: 125.779px;"></div><div class="dot" data-color="gray" style="background-color: rgb(128, 128, 128); left: 424.101px; top: 1.7257px;"></div><div class="dot" data-color="gray" style="background-color: rgb(128, 128, 128); left: 1016.61px; top: 466.9px;"></div><div class="dot" data-color="gray" style="background-color: rgb(128, 128, 128); left: 1061.45px; top: 345.87px;"></div><div class="dot" data-color="gray" style="background-color: rgb(128, 128, 128); left: 362.137px; top: 132.81px;"></div><div class="dot" data-color="gray" style="background-color: rgb(128, 128, 128); left: 599.007px; top: 82.6964px;"></div><div class="dot" data-color="darkbrown" style="background-color: rgb(101, 67, 33); left: 253.597px; top: 227.549px;"></div><div class="dot" data-color="darkbrown" style="background-color: rgb(101, 67, 33); left: 686.703px; top: 263.488px;"></div><div class="dot" data-color="darkbrown" style="background-color: rgb(101, 67, 33); left: 20.0309px; top: 15.0507px;"></div><div class="dot" data-color="darkbrown" style="background-color: rgb(101, 67, 33); left: 315.69px; top: 149.708px;"></div><div class="dot" data-color="darkbrown" style="background-color: rgb(101, 67, 33); left: 182.711px; top: 168.989px;"></div><div class="dot" data-color="brown" style="background-color: rgb(160, 82, 45); left: 964.071px; top: 421.893px;"></div><div class="dot" data-color="brown" style="background-color: rgb(160, 82, 45); left: 55.3904px; top: 76.6104px;"></div><div class="dot" data-color="brown" style="background-color: rgb(160, 82, 45); left: 232.399px; top: 36.7522px;"></div><div class="dot" data-color="brown" style="background-color: rgb(160, 82, 45); left: 788.411px; top: 75.9714px;"></div><div class="dot" data-color="brown" style="background-color: rgb(160, 82, 45); left: 640.397px; top: 427.377px;"></div><div class="dot" data-color="black" style="background-color: rgb(0, 0, 0); left: 197.432px; top: 55.0778px;"></div><div class="dot" data-color="black" style="background-color: rgb(0, 0, 0); left: 345.571px; top: 5.14534px;"></div><div class="dot" data-color="black" style="background-color: rgb(0, 0, 0); left: 433.305px; top: 334.358px;"></div><div class="dot" data-color="black" style="background-color: rgb(0, 0, 0); left: 982.017px; top: 213.047px;"></div><div class="dot" data-color="black" style="background-color: rgb(0, 0, 0); left: 184.266px; top: 413.658px;"></div></div>
+        
+        <div class="custom-bg-control">
+            <h3>自定义背景图片</h3>
+            <div class="url-input">
+                <input type="text" id="bgImageUrl" placeholder="输入图片URL或上传图片">
+                <button class="bg-btn" id="uploadBtn">上传图片</button>
+                <input type="file" id="fileInput" accept="image/*" style="display: none;">
+            </div>
+            <button class="bg-btn" id="applyBgBtn">应用背景图片</button>
+            <div class="preview" id="previewContainer" style="display: none;">
+                <h4>预览</h4>
+                <img id="previewImage" src="file:///Users/mowan/Downloads/Telegram%20Desktop/deepseek_html_20250926_90e260.html" alt="背景预览">
+            </div>
+        </div>
+        
+        <div class="stats-container">
+            <div class="stats-panel">
+                <h2>圆点数量统计</h2>
+                <table class="stats" id="statsTable">
+                    <thead>
+                        <tr>
+                            <th>圆点颜色</th>
+                            <th>初始数量</th>
+                            <th>当前数量</th>
+                            <th>繁殖后数量</th>
+                        </tr>
+                    </thead>
+                    <tbody><tr><td><span class="color-sample" style="background-color: rgb(255, 255, 255);"></span>白色</td><td>5</td><td>5</td><td>-</td></tr><tr><td><span class="color-sample" style="background-color: rgb(211, 211, 211);"></span>浅灰色</td><td>5</td><td>5</td><td>-</td></tr><tr><td><span class="color-sample" style="background-color: rgb(128, 128, 128);"></span>灰色</td><td>5</td><td>5</td><td>-</td></tr><tr><td><span class="color-sample" style="background-color: rgb(101, 67, 33);"></span>深褐色</td><td>5</td><td>5</td><td>-</td></tr><tr><td><span class="color-sample" style="background-color: rgb(160, 82, 45);"></span>褐色</td><td>5</td><td>5</td><td>-</td></tr><tr><td><span class="color-sample" style="background-color: rgb(0, 0, 0);"></span>黑色</td><td>5</td><td>5</td><td>-</td></tr></tbody>
+                </table>
+            </div>
+            
+            <div class="stats-panel">
+                <h2>捕食统计</h2>
+                <div class="counter">
+                    本轮已被捕食: <span id="eatenCount">0</span> 个圆点
+                </div>
+                <div class="counter">
+                    总被捕食: <span id="totalEatenCount">0</span> 个圆点
+                </div>
+                <div class="counter">
+                    当前存活: <span id="aliveCount">30</span> 个圆点
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>实验步骤说明：</h3>
+            <ol>
+                <li>设置每种颜色圆点的初始数量（默认为5）</li>
+                <li>点击"应用数量"按钮应用设置</li>
+                <li>选择背景颜色或上传自定义背景图片</li>
+                <li>点击"开始模拟"按钮，圆点开始运动</li>
+                <li>作为"捕食者"，点击圆点进行"捕食"（点击后圆点消失）</li>
+                <li>点击"停止模拟"按钮停止圆点运动</li>
+                <li>点击"繁殖"按钮，幸存圆点数量将增加三倍</li>
+                <li>观察不同颜色圆点在不同背景下的数量变化</li>
+                <li>点击"重置"按钮可以重新开始实验</li>
+                <li>提示：已针对iPad优化，圆点大小和触摸区域已调整</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        // 全局变量
+        let dots = [];
+        let isSimulating = false;
+        let animationIds = [];
+        const dotColors = ['white', 'lightgray', 'gray', 'darkbrown', 'brown', 'black'];
+        const colorMap = {
+            white: '#ffffff',
+            lightgray: '#d3d3d3',
+            gray: '#808080',
+            darkbrown: '#654321',
+            brown: '#a0522d',
+            black: '#000000'
+        };
+        const colorNames = {
+            white: '白色',
+            lightgray: '浅灰色',
+            gray: '灰色',
+            darkbrown: '深褐色',
+            brown: '褐色',
+            black: '黑色'
+        };
+        
+        // 速度系数 - 1.5倍速
+        const SPEED_FACTOR = 1.5;
+        
+        // 统计数据
+        let stats = {
+            initial: {white: 5, lightgray: 5, gray: 5, darkbrown: 5, brown: 5, black: 5},
+            current: {white: 5, lightgray: 5, gray: 5, darkbrown: 5, brown: 5, black: 5},
+            afterBreeding: {white: 0, lightgray: 0, gray: 0, darkbrown: 0, brown: 0, black: 0}
+        };
+        
+        let eatenCount = 0;
+        let totalEatenCount = 0;
+        
+        // DOM元素
+        const environmentEl = document.getElementById('environment');
+        const lightBgBtn = document.getElementById('lightBgBtn');
+        const darkBgBtn = document.getElementById('darkBgBtn');
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const breedBtn = document.getElementById('breedBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const statsTable = document.getElementById('statsTable');
+        const eatenCountEl = document.getElementById('eatenCount');
+        const totalEatenCountEl = document.getElementById('totalEatenCount');
+        const aliveCountEl = document.getElementById('aliveCount');
+        const bgImageUrl = document.getElementById('bgImageUrl');
+        const applyBgBtn = document.getElementById('applyBgBtn');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const fileInput = document.getElementById('fileInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const previewImage = document.getElementById('previewImage');
+        const applyCountBtn = document.getElementById('applyCountBtn');
+        
+        // 数量输入框
+        const countInputs = {
+            white: document.getElementById('whiteCount'),
+            lightgray: document.getElementById('lightgrayCount'),
+            gray: document.getElementById('grayCount'),
+            darkbrown: document.getElementById('darkbrownCount'),
+            brown: document.getElementById('brownCount'),
+            black: document.getElementById('blackCount')
+        };
+        
+        // 初始化函数
+        function init() {
+            createDots();
+            updateStatsTable();
+            updateCounters();
+            
+            // 设置事件监听器
+            lightBgBtn.addEventListener('click', () => switchBackground('light'));
+            darkBgBtn.addEventListener('click', () => switchBackground('dark'));
+            startBtn.addEventListener('click', startSimulation);
+            stopBtn.addEventListener('click', stopSimulation);
+            breedBtn.addEventListener('click', breedDots);
+            resetBtn.addEventListener('click', resetSimulation);
+            applyBgBtn.addEventListener('click', applyCustomBackground);
+            uploadBtn.addEventListener('click', () => fileInput.click());
+            fileInput.addEventListener('change', handleFileUpload);
+            bgImageUrl.addEventListener('input', updatePreview);
+            applyCountBtn.addEventListener('click', applyCustomCounts);
+            
+            // 添加触摸事件支持
+            addTouchSupport();
+        }
+        
+        // 添加触摸事件支持
+        function addTouchSupport() {
+            // 防止iOS Safari的双击缩放
+            document.addEventListener('touchstart', function(e) {
+                if (e.touches.length > 1) {
+                    e.preventDefault();
+                }
+            });
+            
+            // 防止iOS Safari的滚动和缩放
+            document.addEventListener('touchmove', function(e) {
+                if (e.touches.length > 1) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+            
+            // 为按钮添加触摸反馈
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.95)';
+                });
+                
+                button.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                });
+            });
+        }
+        
+        // 应用自定义数量
+        function applyCustomCounts() {
+            // 停止当前模拟
+            stopSimulation();
+            
+            // 更新统计数据
+            dotColors.forEach(color => {
+                const count = parseInt(countInputs[color].value) || 0;
+                stats.initial[color] = count;
+                stats.current[color] = count;
+                stats.afterBreeding[color] = 0;
+            });
+            
+            // 重新创建圆点
+            createDots();
+            
+            // 更新统计表格和计数器
+            updateStatsTable();
+            updateCounters();
+            
+            // 重置捕食计数
+            eatenCount = 0;
+            totalEatenCount = 0;
+            updateCounters();
+        }
+        
+        // 创建圆点
+        function createDots() {
+            environmentEl.innerHTML = '';
+            dots = [];
+            
+            dotColors.forEach(color => {
+                const count = stats.initial[color];
+                for (let i = 0; i < count; i++) {
+                    createDot(color);
+                }
+            });
+        }
+        
+        // 创建单个圆点
+        function createDot(color) {
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            dot.dataset.color = color;
+            dot.style.backgroundColor = colorMap[color];
+            
+            // 随机位置
+            const x = Math.random() * (environmentEl.offsetWidth - 14);
+            const y = Math.random() * (environmentEl.offsetHeight - 14);
+            dot.style.left = `${x}px`;
+            dot.style.top = `${y}px`;
+            
+            // 点击事件 - 捕食 (同时支持鼠标和触摸)
+            dot.addEventListener('click', handleDotClick);
+            dot.addEventListener('touchend', handleDotClick);
+            
+            environmentEl.appendChild(dot);
+            
+            // 存储圆点数据 - 初始速度提高1.5倍
+            dots.push({
+                element: dot,
+                color: color,
+                x: x,
+                y: y,
+                dx: (Math.random() - 0.5) * 2 * SPEED_FACTOR,
+                dy: (Math.random() - 0.5) * 2 * SPEED_FACTOR
+            });
+        }
+        
+        // 处理圆点点击/触摸事件
+        function handleDotClick(e) {
+            // 阻止默认行为，防止iOS Safari的缩放
+            e.preventDefault();
+            
+            if (isSimulating) {
+                const dot = e.currentTarget;
+                const color = dot.dataset.color;
+                stats.current[color]--;
+                eatenCount++;
+                totalEatenCount++;
+                updateStatsTable();
+                updateCounters();
+                dot.remove();
+                
+                // 从数组中移除
+                const index = dots.findIndex(d => d.element === dot);
+                if (index !== -1) {
+                    dots.splice(index, 1);
+                }
+            }
+        }
+        
+        // 切换背景
+        function switchBackground(type) {
+            environmentEl.style.backgroundImage = 'none';
+            if (type === 'light') {
+                environmentEl.classList.remove('dark-bg');
+                environmentEl.classList.add('light-bg');
+            } else {
+                environmentEl.classList.remove('light-bg');
+                environmentEl.classList.add('dark-bg');
+            }
+        }
+        
+        // 应用自定义背景
+        function applyCustomBackground() {
+            const url = bgImageUrl.value.trim();
+            if (url) {
+                environmentEl.style.backgroundImage = `url('${url}')`;
+                environmentEl.classList.remove('light-bg', 'dark-bg');
+            }
+        }
+        
+        // 处理文件上传
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    bgImageUrl.value = e.target.result;
+                    updatePreview();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        // 更新预览
+        function updatePreview() {
+            const url = bgImageUrl.value.trim();
+            if (url) {
+                previewImage.src = url;
+                previewContainer.style.display = 'block';
+            } else {
+                previewContainer.style.display = 'none';
+            }
+        }
+        
+        // 开始模拟
+        function startSimulation() {
+            if (isSimulating) return;
+            
+            isSimulating = true;
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+            breedBtn.disabled = true;
+            
+            // 重置本轮捕食计数
+            eatenCount = 0;
+            updateCounters();
+            
+            // 启动所有圆点的动画
+            dots.forEach(dot => {
+                animateDot(dot);
+            });
+        }
+        
+        // 停止模拟
+        function stopSimulation() {
+            if (!isSimulating) return;
+            
+            isSimulating = false;
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            breedBtn.disabled = false;
+            
+            // 停止所有动画
+            animationIds.forEach(id => {
+                cancelAnimationFrame(id);
+            });
+            animationIds = [];
+        }
+        
+        // 动画圆点
+        function animateDot(dot) {
+            if (!isSimulating) return;
+            
+            // 更新位置 - 使用1.5倍速度
+            dot.x += dot.dx;
+            dot.y += dot.dy;
+            
+            // 边界检测
+            if (dot.x <= 0 || dot.x >= environmentEl.offsetWidth - 14) {
+                dot.dx *= -1;
+            }
+            if (dot.y <= 0 || dot.y >= environmentEl.offsetHeight - 14) {
+                dot.dy *= -1;
+            }
+            
+            // 应用新位置
+            dot.element.style.left = `${dot.x}px`;
+            dot.element.style.top = `${dot.y}px`;
+            
+            // 继续动画
+            const id = requestAnimationFrame(() => animateDot(dot));
+            animationIds.push(id);
+        }
+        
+        // 繁殖圆点
+        function breedDots() {
+            // 统计当前各颜色圆点数量
+            const currentCounts = {...stats.current};
+            
+            // 繁殖：每种颜色的圆点数量增加三倍
+            dotColors.forEach(color => {
+                const count = currentCounts[color];
+                for (let i = 0; i < count * 2; i++) {
+                    createDot(color);
+                }
+                stats.afterBreeding[color] = count * 3;
+            });
+            
+            // 更新统计数据
+            stats.current = {...stats.afterBreeding};
+            updateStatsTable();
+            updateCounters();
+            
+            // 禁用繁殖按钮，直到下一次模拟
+            breedBtn.disabled = true;
+        }
+        
+        // 重置模拟
+        function resetSimulation() {
+            // 停止模拟
+            stopSimulation();
+            
+            // 重置统计数据
+            dotColors.forEach(color => {
+                const count = parseInt(countInputs[color].value) || 0;
+                stats.initial[color] = count;
+                stats.current[color] = count;
+                stats.afterBreeding[color] = 0;
+            });
+            
+            // 重置捕食计数
+            eatenCount = 0;
+            totalEatenCount = 0;
+            
+            // 重新创建圆点
+            createDots();
+            
+            // 更新统计表格和计数器
+            updateStatsTable();
+            updateCounters();
+            
+            // 重置按钮状态
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            breedBtn.disabled = true;
+        }
+        
+        // 更新统计表格
+        function updateStatsTable() {
+            const tbody = statsTable.querySelector('tbody');
+            tbody.innerHTML = '';
+            
+            let totalAlive = 0;
+            
+            dotColors.forEach(color => {
+                const row = document.createElement('tr');
+                
+                // 颜色列
+                const colorCell = document.createElement('td');
+                const colorSample = document.createElement('span');
+                colorSample.className = 'color-sample';
+                colorSample.style.backgroundColor = colorMap[color];
+                colorCell.appendChild(colorSample);
+                colorCell.appendChild(document.createTextNode(colorNames[color]));
+                
+                // 初始数量列
+                const initialCell = document.createElement('td');
+                initialCell.textContent = stats.initial[color];
+                
+                // 当前数量列
+                const currentCell = document.createElement('td');
+                currentCell.textContent = stats.current[color];
+                totalAlive += stats.current[color];
+                
+                // 繁殖后数量列
+                const afterBreedingCell = document.createElement('td');
+                afterBreedingCell.textContent = stats.afterBreeding[color] || '-';
+                
+                row.appendChild(colorCell);
+                row.appendChild(initialCell);
+                row.appendChild(currentCell);
+                row.appendChild(afterBreedingCell);
+                
+                tbody.appendChild(row);
+            });
+            
+            // 更新存活计数器
+            aliveCountEl.textContent = totalAlive;
+        }
+        
+        // 更新计数器
+        function updateCounters() {
+            eatenCountEl.textContent = eatenCount;
+            totalEatenCountEl.textContent = totalEatenCount;
+            
+            // 计算当前存活数量
+            let totalAlive = 0;
+            for (const color in stats.current) {
+                totalAlive += stats.current[color];
+            }
+            aliveCountEl.textContent = totalAlive;
+        }
+        
+        // 页面加载时初始化
+        window.addEventListener('load', init);
+        
+        // 处理窗口大小变化
+        window.addEventListener('resize', function() {
+            if (!isSimulating) {
+                // 重新定位圆点
+                dots.forEach(dot => {
+                    dot.x = Math.min(dot.x, environmentEl.offsetWidth - 14);
+                    dot.y = Math.min(dot.y, environmentEl.offsetHeight - 14);
+                    dot.element.style.left = `${dot.x}px`;
+                    dot.element.style.top = `${dot.y}px`;
+                });
+            }
+        });
+    </script>
+
+</body></html>
